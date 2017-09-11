@@ -3,23 +3,49 @@ import {connect} from 'react-redux';
 
 import './topbar.css'
 
- class Topbar extends React.Component {
+class Topbar extends React.Component {
   constructor() {
     super();
-    this.state = {
+    this.state = {}
+  }
 
+  isActive(actionIsActive) {
+    return actionIsActive ? 'bar-active' : null
+  }
+
+  changeActiveView() {
+    if (!this.props.isView) {
+      this.props.activateView()
+    }
+  }
+
+  changeActiveAdd() {
+    if (!this.props.isAdd) {
+      this.props.activateAdd();
+    }
+  }
+
+  changeActiveEdit() {
+    if (!this.props.isEdit) {
+      this.props.activateEdit();
+    }
+  }
+
+  changeActiveDelete() {
+    if (!this.props.isDelete) {
+      this.props.activateDelete();
     }
   }
 
   render() {
-    console.info(this.props.bar);
+
     return (
       <div>
         <ul>
-          <li>View</li>
-          <li>Add</li>
-          <li>Edit</li>
-          <li>Delete</li>
+          <li onClick={() => this.changeActiveView()} className={this.isActive(this.props.bar.isView)}>View</li>
+          <li onClick={() => this.changeActiveAdd()} className={this.isActive(this.props.bar.isAdd)}>Add</li>
+          <li onClick={() => this.changeActiveEdit()} className={this.isActive(this.props.bar.isEdit)}>Edit</li>
+          <li onClick={() => this.changeActiveDelete()} className={this.isActive(this.props.bar.isDelete)}>Delete</li>
         </ul>
       </div>
     )
@@ -28,14 +54,30 @@ import './topbar.css'
 
 function mapDispatchToProps(dispatch) {
   return {
-    // addTotoReducer(id, text){
-    //   return dispatch({
-    //     type: 'ADD_TODO',
-    //     id,
-    //     text
-    //   })
-    // }
+
+    activateAdd() {
+      return dispatch({
+        type: 'ACTIVE_ADD'
+      })
+    },
+    activateView() {
+      return dispatch({
+        type: 'ACTIVE_VIEW'
+      })
+    },
+    activateEdit() {
+      return dispatch({
+        type: 'ACTIVE_EDIT'
+      })
+    },
+    activateDelete() {
+      return dispatch({
+        type: 'ACTIVE_DELETE'
+      })
+    }
   }
+
+
 }
 
 function mapStateToProps(stateData) {

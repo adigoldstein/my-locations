@@ -15,12 +15,20 @@ const dummyCategories = [
 
 export default function categoriesReducer(catData = dummyCategories, action) {
 
-  // if (action.type === 'ADD_TODO') {
-  //   console.info(action.id, action.text);
-  //   let dataCopy = [...data];
-  //   dataCopy.push({id: action.id, text: action.text, done: false});
-  //   return dataCopy ;
-  // }
+  switch (action.type) {
+
+    case 'DELETE_CATEGORY':
+
+      let newCatData = [...catData];
+      for (const catId of action.catArr) {
+        newCatData = newCatData.filter((category) => catId !== category.id)
+      }
+      console.info(newCatData);
+      return newCatData;
+    break;
+
+
+  }
 
   return catData
 }
