@@ -1,4 +1,5 @@
 import React from 'react'
+import Topbar from "../Topbar/Topbar";
 
 export default class Locations extends React.Component{
   constructor(){
@@ -8,6 +9,7 @@ export default class Locations extends React.Component{
   render() {
     return(
       <div>
+        <Topbar title={'Locations'}/>
         <h1>Location compnent!!!</h1>
       </div>
     )

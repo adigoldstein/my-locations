@@ -41,6 +41,7 @@ class Topbar extends React.Component {
 
     return (
       <div>
+        <h2>{this.props.title}</h2>
         <ul>
           <li onClick={() => this.changeActiveView()} className={this.isActive(this.props.bar.isView)}>View</li>
           <li onClick={() => this.changeActiveAdd()} className={this.isActive(this.props.bar.isAdd)}>Add</li>

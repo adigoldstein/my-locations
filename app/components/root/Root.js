@@ -9,7 +9,7 @@ import {
 
 import Categories from "../categories/categories";
 import Locations from "../locations/Locations";
-import Topbar from "../Topbar/Topbar";
+
 
 export default class Root extends React.Component {
   constractor() {
@@ -22,7 +22,6 @@ export default class Root extends React.Component {
         <BrowserRouter>
           <div>
             <h1>MyLocation</h1>
-            <Topbar/>
             <Switch>
               <Route exact path="/" component={() =>
                 <Redirect to="/categories"/>
