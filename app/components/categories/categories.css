@@ -1,0 +1,49 @@
+.view-item {
+  padding: 10px;
+  font-size:20px;
+  position: relative;
+}
+
+.add-category {
+  padding-top: 30px;
+  display: flex;
+  justify-content: center;
+
+}
+
+.add-input {
+  margin-right: 10px;
+  width: 200px;
+}
+
+.view-list {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 0 auto;
+}
+
+.category-name {
+  display: inline-block;
+  padding-right: 10px;
+}
+.edit-btn {
+  display: inline-block;
+  position: absolute;
+  right: 0;
+}
+
+.checkbox-list  {
+  display: flex;
+  padding: 10px;
+  font-size:20px;
+}
+
+.checkbox-list input {
+  margin-top: 6px;
+}
+
+.delete-btn {
+  display: inline-block;
+}

@@ -1,0 +1,22 @@
+.content {
+  min-height: calc(100vh - 102px);
+}
+
+.footer-menu {
+  display: flex;
+  justify-content: center;
+}
+.footer-menu {
+  font-size:35px;
+  background-color: #6a98e2;
+}
+
+.footer-menu li {
+  padding: 20px 80px;
+}
+
+.footer-menu a:link , .footer-menu a:visited {
+  text-decoration: none;
+  color: white;
+}
+

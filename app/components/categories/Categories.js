@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux';
 
 import Topbar from "../Topbar/Topbar";
+import './categories.css'
 
 class Categories extends React.Component {
   constructor() {
@@ -39,25 +40,30 @@ class Categories extends React.Component {
   }
 
   createEditBtn(id) {
-    return this.props.bar.isEdit ? <div id={id} onClick={(e) => this.editCategoryClickHandler(e)}>Edit</div> : null;
+    return this.props.bar.isEdit ?
+      <div id={id} className={'edit-btn btn'} onClick={(e) => this.editCategoryClickHandler(e)}>Edit</div> : null;
   }
 
   editCategoryClickHandler(e) {
     const idToEdit = e.target.getAttribute('id');
     const editVal = this.props.cat.find((catObj) => catObj.id.toString() === idToEdit);
+    console.info(editVal);
     this.setState({editDisplay: true, editValue: editVal, editInput: editVal.name})
   }
 
   addCategoryClickHandler() {
-    this.props.addCategory(this.state.addInput);
-    this.props.initBar()
+    if (this.state.addInput !== '') {
+      this.props.addCategory(this.state.addInput);
+      this.props.initBar();
+      this.setState({addInput:''});
+    }
   }
 
   createCategoryView() {
     if (this.props.bar.isDelete) {
       return (
         this.props.cat.map((category) => {
-          return <label key={category.id}>
+          return <label className={'checkbox-list'} key={category.id}>
             <input type='checkbox' checked={this.isCatChecked(category.id)}
                    onChange={(e) => this.checkUncheckCategory(e.target.checked, category.id)}/>
             {category.name}</label>
@@ -65,20 +71,20 @@ class Categories extends React.Component {
       )
     } else if (this.props.bar.isAdd) {
       return (
-        <div>
-          <input type="text" onChange={(e) => this.setState({addInput: e.target.value})}
+        <div className={'add-category'}>
+          <input className={'add-input'} type="text" onChange={(e) => this.setState({addInput: e.target.value})}
                  placeholder={'Insert new category name here'}/>
-          <div onClick={() => this.addCategoryClickHandler()}>Add categoty</div>
+          <div className={'btn'} onClick={() => this.addCategoryClickHandler()}>Add categoty</div>
         </div>
       )
     } else {
       return (
-        <ul>
+        <ul className={'view-list'}>
           {this.props.cat.map((category) => {
-            return <div key={category.id}>
-              <div>{category.name}</div>
+            return <li className={'view-item'} key={category.id}>
+              <div className={'category-name'}>{category.name}</div>
               {this.createEditBtn(category.id)}
-            </div>
+            </li>
           })}
         </ul>
       )
@@ -88,7 +94,7 @@ class Categories extends React.Component {
   createButton() {
     if (this.props.bar.isDelete && this.state.selectedCategories.length > 0) {
       return (
-        <div onClick={() => this.deleteCategories()}>Delete</div>
+        <div className={'delete-btn btn'} onClick={() => this.deleteCategories()}>Delete</div>
       )
     }
   }
@@ -113,6 +119,7 @@ class Categories extends React.Component {
   deleteCategories() {
     console.info('delete');
     this.props.deleteCat(this.state.selectedCategories);
+    this.setState({selectedCategories:[]});
   }
 
   componentDidMount() {
@@ -123,9 +130,10 @@ class Categories extends React.Component {
     return (
       <div>
         <Topbar title={'Categories'}/>
-        {this.createButton()}
+
         {this.createEditForm()}
         {this.createCategoryView()}
+        {this.createButton()}
       </div>
     )
   }

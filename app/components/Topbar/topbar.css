@@ -1,3 +1,28 @@
+.topbar-container {
+  background-color: #6a98e2;
+  display: flex;
+  justify-content: space-between;
+
+}
+
+.bar-title {
+  display: flex;
+  align-items: center;
+  /*padding-left: 5%;*/
+  padding: 20px 0 20px 5%;
+}
+
+.action-list {
+  display: flex;
+  padding-right: 10%;
+}
+
+.action-list li {
+  padding: 25px ;
+  cursor: pointer;
+  color: white;
+}
+
 .bar-active {
-  background-color: red;
+  background-color: #4529b5;
 }

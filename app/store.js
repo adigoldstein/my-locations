@@ -2,10 +2,10 @@ import { createStore, combineReducers } from 'redux';
 
 import catData from './reducers/categories'
 import  bar from './reducers/bar'
-// import './reducers/locations'
-
+import locData from './reducers/locations'
 const reducer = combineReducers({
   catData,
+  locData,
   bar
 });
 

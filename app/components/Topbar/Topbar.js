@@ -40,9 +40,9 @@ class Topbar extends React.Component {
   render() {
 
     return (
-      <div>
-        <h2>{this.props.title}</h2>
-        <ul>
+      <div className={'topbar-container'}>
+        <h2 className={'bar-title'}>{this.props.title}</h2>
+        <ul className={'action-list'}>
           <li onClick={() => this.changeActiveView()} className={this.isActive(this.props.bar.isView)}>View</li>
           <li onClick={() => this.changeActiveAdd()} className={this.isActive(this.props.bar.isAdd)}>Add</li>
           <li onClick={() => this.changeActiveEdit()} className={this.isActive(this.props.bar.isEdit)}>Edit</li>
