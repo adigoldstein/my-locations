@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 
 import Topbar from "../Topbar/Topbar";
 import Loaction from '../location/Location'
+import './locations.css'
 
 class Locations extends React.Component {
   constructor() {
@@ -13,13 +14,44 @@ class Locations extends React.Component {
       addressInput: '',
       catInput: '',
       latInput: '',
-      lonInput: ''
+      lonInput: '',
+      deleteSelectedLocs: []
 
     }
   }
 
-  isCatChecked(id) {
-    for (const selectedId of this.state.selectedCategories) {
+  deleteLocationsClickHandler() {
+    this.props.deleteLocations(this.state.deleteSelectedLocs);
+    this.setState({deleteSelectedLocs: []}, this.props.initBar);
+
+  }
+
+  deleteBtn() {
+    console.info(this.state.deleteSelectedLocs);
+    if (this.state.deleteSelectedLocs.length > 0) {
+      return <div onClick={()=> this.deleteLocationsClickHandler()} className={'btn del-loc-btn'}>Delete</div>
+    }
+  }
+
+  deleteDisplayer() {
+    console.info('delete!');
+    return (
+      <div>
+      {this.props.loc.map((location) => {
+        return <label className={'checkbox-list'} key={location.id}>
+          <input type='checkbox'
+                 checked={this.isCatChecked(location.id, this.state.deleteSelectedLocs)}
+                 onChange={(e) => this.checkUncheckCategory(e.target.checked, location.id, this.state.deleteSelectedLocs)}
+          />
+          {location.name}</label>
+      })}
+        { this.deleteBtn()}
+      </div>
+    )
+  }
+
+  isCatChecked(id, arrToCheck) {
+    for (const selectedId of arrToCheck) {
       if (selectedId === id) {
         return true
       }
@@ -27,23 +59,31 @@ class Locations extends React.Component {
     return false
   }
 
-  checkUncheckCategory(isChecked, id) {
+  checkUncheckCategory(isChecked, id, arrToCheck) {
 
     if (isChecked) {
       //need to add to state
-      const newCategories = [...this.state.selectedCategories];
+      let newCategories = [...arrToCheck];
       newCategories.push(id);
-      this.setState({selectedCategories: newCategories})
+      this.setState({deleteSelectedLocs: newCategories})
     } else {
       //need to remove from state
-      let newCategories = this.state.selectedCategories.filter((catId) => catId !== id);
-      this.setState({selectedCategories: newCategories});
+      let newCategories = arrToCheck.filter((catId) => catId !== id);
+      this.setState({deleteSelectedLocs: newCategories});
     }
   }
 
   addLocationClickHandler() {
-    console.info(`name: ${this.state.nameInput}, address: ${this.state.addressInput}, category: ${this.state.catInput}, lat: ${this.state.latInput}, lon: ${this.state.lonInput}`);
-    this.props.addLocation(this.state.nameInput, this.state.addressInput, this.state.selectedCategories, this.state.latInput, this.state.lonInput)
+    this.props.addLocation(this.state.nameInput, this.state.addressInput, this.state.selectedCategories, this.state.latInput, this.state.lonInput);
+    this.setState({
+      selectedCategories: [],
+      nameInput: '',
+      addressInput: '',
+      catInput: '',
+      latInput: '',
+      lonInput: ''
+    });
+    this.props.initBar()
   }
 
   addLocationView() {
@@ -53,8 +93,8 @@ class Locations extends React.Component {
         {this.props.cat.map((category) => {
           return <label className={'cat-list'} key={category.id}>
             <input type='checkbox'
-                   checked={this.isCatChecked(category.id)}
-                   onChange={(e) => this.checkUncheckCategory(e.target.checked, category.id)}
+                   checked={this.isCatChecked(category.id, this.state.selectedCategories)}
+                   onChange={(e) => this.checkUncheckCategory(e.target.checked, category.id, this.state.selectedCategories)}
             />
             {category.name}</label>
         })}
@@ -67,7 +107,7 @@ class Locations extends React.Component {
   }
 
   createView() {
-    if (this.props.bar.isView) {
+    if (this.props.bar.isView || this.props.bar.isEdit) {
       return (
         <ul>
           {this.props.loc.map((location) => <Loaction key={location.id}
@@ -76,12 +116,15 @@ class Locations extends React.Component {
       )
     } else if (this.props.bar.isAdd) {
       return this.addLocationView()
+    } else if (this.props.bar.isDelete) {
+      {
+        return this.deleteDisplayer()
+      }
     }
   }
 
   componentDidMount() {
     this.props.initBar();
-    // console.info(this.props.loc);
   }
 
   render() {
@@ -109,6 +152,12 @@ function mapDispatchToProps(dispatch) {
         catArr,
         lat,
         lon
+      })
+    },
+    deleteLocations(locArr) {
+      return dispatch({
+        type: 'DELETE_LOCATIONS',
+        locArr
       })
     }
 

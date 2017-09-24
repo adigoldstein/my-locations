@@ -1,5 +1,5 @@
 import uuid from 'uuid';
-console.info(uuid());
+
 const dummyLocations = [
   {
     id: '5388e5fc-9789-4d68-a747-23d0dc1c4d7d',
@@ -52,8 +52,31 @@ console.info(action);
     return newLocData;
   }
 
+  if (action.type === 'EDIT_LOCATION') {
+    let newLocData = [...locData];
+    for (const loc of newLocData) {
+      if (loc.id === action.id ) {
+       loc.name = action.name;
+       loc.address = action.address;
+       loc.cat = action.selectedCategories;
+       loc.coordinates.lon = action.lon;
+       loc.coordinates.lat = action.lat;
+      }
+    }
+    return newLocData
+  }
 
+  if (action.type === 'DELETE_LOCATIONS') {
+    console.info(action.locArr);
+    let newLocData = [...locData];
+    for (const catId of action.locArr) {
+      newLocData = newLocData.filter((location) => catId !== location.id)
+    }
+    return newLocData;
+  }
   return locData
 }
+
+
 
 
