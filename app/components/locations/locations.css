@@ -3,7 +3,18 @@
   width: 120px;
 }
 
-.locations-list {
+.locations-list, .delete-container {
   width: 60%;
   margin: 0 auto;
 }
+
+.location-error {
+  color: red;
+  padding-bottom: 5px;
+}
+
+.cat-list {
+  padding-right: 5px;
+}
+
+

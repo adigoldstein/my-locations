@@ -11,9 +11,20 @@
 
 }
 
+.add-container {
+  position: relative;
+}
+
 .add-input {
   margin-right: 10px;
   width: 200px;
+  margin-top: 8px;
+
+}
+.cat-error-msg {
+  position: absolute;
+  top: 35px ;
+  color: red;
 }
 
 .view-list {

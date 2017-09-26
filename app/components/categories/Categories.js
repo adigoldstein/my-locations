@@ -12,7 +12,8 @@ class Categories extends React.Component {
       editDisplay: false,
       editValue: {},
       editInput: '',
-      addInput: ''
+      addInput: '',
+      showError: false
     }
   }
 
@@ -55,7 +56,15 @@ class Categories extends React.Component {
     if (this.state.addInput !== '') {
       this.props.addCategory(this.state.addInput);
       this.props.initBar();
-      this.setState({addInput:''});
+      this.setState({addInput: ''});
+    } else {
+      this.setState({showError: true});
+    }
+  }
+
+  addCategoryErrorMsg() {
+    if (this.state.showError) {
+      return <div className={'cat-error-msg'}>Please fill the location name</div>
     }
   }
 
@@ -72,8 +81,11 @@ class Categories extends React.Component {
     } else if (this.props.bar.isAdd) {
       return (
         <div className={'add-category'}>
-          <input className={'add-input'} type="text" onChange={(e) => this.setState({addInput: e.target.value})}
-                 placeholder={'Insert new category name here'}/>
+          <div className={'add-container'}>
+            <input className={'add-input'} type="text" onChange={(e) => this.setState({addInput: e.target.value})}
+                   placeholder={'Insert new category name here'}/>
+            {this.addCategoryErrorMsg()}
+          </div>
           <div className={'btn'} onClick={() => this.addCategoryClickHandler()}>Add categoty</div>
         </div>
       )
@@ -119,11 +131,12 @@ class Categories extends React.Component {
   deleteCategories() {
     console.info('delete');
     this.props.deleteCat(this.state.selectedCategories);
-    this.setState({selectedCategories:[]});
+    this.setState({selectedCategories: []});
   }
 
   componentDidMount() {
-    this.props.initBar()
+    this.props.initBar();
+
   }
 
   render() {

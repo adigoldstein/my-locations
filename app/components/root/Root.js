@@ -23,7 +23,7 @@ export default class Root extends React.Component {
         <BrowserRouter>
           <div>
             <div className={'content'}>
-              <h1>MyLocation</h1>
+              <h1 className={'main-header'}>MyLocation</h1>
               <Switch>
                 <Route exact path="/" component={() =>
                   <Redirect to="/categories"/>

@@ -15,7 +15,8 @@ class Locations extends React.Component {
       catInput: '',
       latInput: '',
       lonInput: '',
-      deleteSelectedLocs: []
+      deleteSelectedLocs: [],
+      showError : false
 
     }
   }
@@ -29,22 +30,22 @@ class Locations extends React.Component {
   deleteBtn() {
     console.info(this.state.deleteSelectedLocs);
     if (this.state.deleteSelectedLocs.length > 0) {
-      return <div onClick={()=> this.deleteLocationsClickHandler()} className={'btn del-loc-btn'}>Delete</div>
+      return <div onClick={() => this.deleteLocationsClickHandler()} className={'btn del-loc-btn'}>Delete</div>
     }
   }
 
   deleteDisplayer() {
     return (
-      <div>
-      {this.props.loc.map((location) => {
-        return <label className={'checkbox-list'} key={location.id}>
-          <input type='checkbox'
-                 checked={this.isCatChecked(location.id, this.state.deleteSelectedLocs)}
-                 onChange={(e) => this.checkUncheckCategory(e.target.checked, location.id, this.state.deleteSelectedLocs)}
-          />
-          {location.name}</label>
-      })}
-        { this.deleteBtn()}
+      <div className={'delete-container'}>
+        {this.props.loc.map((location) => {
+          return <label className={'checkbox-list'} key={location.id}>
+            <input type='checkbox'
+                   checked={this.isCatChecked(location.id, this.state.deleteSelectedLocs)}
+                   onChange={(e) => this.checkUncheckCategory(e.target.checked, location.id, this.state.deleteSelectedLocs, 'delete')}
+            />
+            {location.name}</label>
+        })}
+        {this.deleteBtn()}
       </div>
     )
   }
@@ -58,37 +59,57 @@ class Locations extends React.Component {
     return false
   }
 
-  checkUncheckCategory(isChecked, id, arrToCheck) {
+  checkUncheckCategory(isChecked, id, arrToCheck, action) {
 
     if (isChecked) {
       //need to add to state
       let newCategories = [...arrToCheck];
       newCategories.push(id);
-      this.setState({deleteSelectedLocs: newCategories})
+      if (action === 'delete') {
+        this.setState({deleteSelectedLocs: newCategories})
+      }  else {
+        this.setState({selectedCategories: newCategories})
+      }
     } else {
       //need to remove from state
       let newCategories = arrToCheck.filter((catId) => catId !== id);
-      this.setState({deleteSelectedLocs: newCategories});
+      if (action === 'delete') {
+        this.setState({deleteSelectedLocs: newCategories});
+      }else {
+        this.setState({selectedCategories: newCategories})
+      }
     }
   }
 
   addLocationClickHandler() {
-    this.props.addLocation(this.state.nameInput, this.state.addressInput, this.state.selectedCategories, this.state.latInput, this.state.lonInput);
-    this.setState({
-      selectedCategories: [],
-      nameInput: '',
-      addressInput: '',
-      catInput: '',
-      latInput: '',
-      lonInput: ''
-    });
-    this.props.initBar()
+    if (this.state.nameInput !== '' && this.state.addressInput !== '' && this.state.selectedCategories.length > 0 && this.state.lonInput !== '' && this.state.latInput !== '' ) {
+      this.props.addLocation(this.state.nameInput, this.state.addressInput, this.state.selectedCategories, this.state.latInput, this.state.lonInput);
+      this.setState({
+        selectedCategories: [],
+        nameInput: '',
+        addressInput: '',
+        catInput: '',
+        latInput: '',
+        lonInput: ''
+      });
+      this.props.initBar()
+    } else  {
+      this.setState({showError: true})
+    }
+
+  }
+
+  showError() {
+    if (this.state.showError) {
+      return <div className={'location-error'}>*Please fill all fields (and select minimum one category)</div>
+    }
   }
 
   addLocationView() {
     return (
       <div className={'add-location-container'}>
-        <input className={'add-loc-input'} onChange={(e) => this.setState({nameInput: e.target.value})} type="text" placeholder={'Name'}/>
+        <input className={'add-loc-input'} onChange={(e) => this.setState({nameInput: e.target.value})} type="text"
+               placeholder={'Name'}/>
         {this.props.cat.map((category) => {
           return <label className={'cat-list'} key={category.id}>
             <input type='checkbox'
@@ -97,9 +118,13 @@ class Locations extends React.Component {
             />
             {category.name}</label>
         })}
-        <input className={'add-loc-input'} onChange={(e) => this.setState({addressInput: e.target.value})} type="text" placeholder={'Address'}/>
-        <input className={'add-loc-input'}onChange={(e) => this.setState({latInput: e.target.value})} type="text" placeholder={'Latitude'}/>
-        <input className={'add-loc-input'} onChange={(e) => this.setState({lonInput: e.target.value})} type="text" placeholder={'Longitude'}/>
+        <input className={'add-loc-input'} onChange={(e) => this.setState({addressInput: e.target.value})} type="text"
+               placeholder={'Address'}/>
+        <input className={'add-loc-input'} onChange={(e) => this.setState({latInput: e.target.value})} type="text"
+               placeholder={'Latitude'}/>
+        <input className={'add-loc-input'} onChange={(e) => this.setState({lonInput: e.target.value})} type="text"
+               placeholder={'Longitude'}/>
+        {this.showError()}
         <div className={'btn add-loc-btn'} onClick={() => this.addLocationClickHandler()}>Add</div>
       </div>
     )

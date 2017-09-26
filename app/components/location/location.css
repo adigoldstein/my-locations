@@ -10,6 +10,10 @@
   padding: 10px;
 }
 
+.location-lon, .location-lat {
+  padding-left: 110px;
+}
+
 .hide-show-map-btn, .edit-loc-btn, .save-loc-changes-btn  {
   display: inline-block;
   width: 120px;
