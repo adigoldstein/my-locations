@@ -34,7 +34,6 @@ class Locations extends React.Component {
   }
 
   deleteDisplayer() {
-    console.info('delete!');
     return (
       <div>
       {this.props.loc.map((location) => {
@@ -88,8 +87,8 @@ class Locations extends React.Component {
 
   addLocationView() {
     return (
-      <div>
-        <input onChange={(e) => this.setState({nameInput: e.target.value})} type="text" placeholder={'Name'}/>
+      <div className={'add-location-container'}>
+        <input className={'add-loc-input'} onChange={(e) => this.setState({nameInput: e.target.value})} type="text" placeholder={'Name'}/>
         {this.props.cat.map((category) => {
           return <label className={'cat-list'} key={category.id}>
             <input type='checkbox'
@@ -98,10 +97,10 @@ class Locations extends React.Component {
             />
             {category.name}</label>
         })}
-        <input onChange={(e) => this.setState({addressInput: e.target.value})} type="text" placeholder={'Address'}/>
-        <input onChange={(e) => this.setState({latInput: e.target.value})} type="text" placeholder={'Latitude'}/>
-        <input onChange={(e) => this.setState({lonInput: e.target.value})} type="text" placeholder={'Longitude'}/>
-        <div onClick={() => this.addLocationClickHandler()}>Add</div>
+        <input className={'add-loc-input'} onChange={(e) => this.setState({addressInput: e.target.value})} type="text" placeholder={'Address'}/>
+        <input className={'add-loc-input'}onChange={(e) => this.setState({latInput: e.target.value})} type="text" placeholder={'Latitude'}/>
+        <input className={'add-loc-input'} onChange={(e) => this.setState({lonInput: e.target.value})} type="text" placeholder={'Longitude'}/>
+        <div className={'btn add-loc-btn'} onClick={() => this.addLocationClickHandler()}>Add</div>
       </div>
     )
   }
@@ -109,7 +108,7 @@ class Locations extends React.Component {
   createView() {
     if (this.props.bar.isView || this.props.bar.isEdit) {
       return (
-        <ul>
+        <ul className={'locations-list'}>
           {this.props.loc.map((location) => <Loaction key={location.id}
                                                       location={location}/>)}
         </ul>

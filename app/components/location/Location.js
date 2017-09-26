@@ -41,7 +41,7 @@ class Location extends React.Component {
   }
 
   editBtnDisplayer() {
-    if (this.props.bar.isEdit) {
+    if (this.props.bar.isEdit && !this.state.viewEditFields) {
       return <div onClick={(e) => this.editLocClickHandler(e)} id={this.props.location.id}
                   className={'btn edit-loc-btn'}>Edit</div>
     }
@@ -93,7 +93,7 @@ class Location extends React.Component {
       }
     });
     const retStr = catName.slice(0, -2);
-    return <div>Category : {retStr}</div>
+    return <div className={'location-cat'}>Category : {retStr}</div>
   }
 
   saveChangesClickHandler() {
@@ -103,13 +103,15 @@ class Location extends React.Component {
       this.state.addressInput,
       this.state.latInput,
       this.state.lonInput);
-    this.setState({ isMap: false,
+    this.setState({
+      isMap: false,
       viewEditFields: false,
       selectedCategories: [],
       nameInput: '',
       addressInput: '',
       latInput: '',
-      lonInput: ''});
+      lonInput: ''
+    });
     this.props.initBar()
   }
 
@@ -151,15 +153,16 @@ class Location extends React.Component {
   displayViewOrEdit() {
     if (this.state.viewEditFields) {
       return (
-        <div>
-          <input onChange={(e) => this.setState({nameInput: e.target.value})} type="text"
+        <div className={'edit-location-container'}>
+          <input className={'edit-loc-input'} onChange={(e) => this.setState({nameInput: e.target.value})} type="text"
                  defaultValue={this.state.nameInput}/>
-          <input onChange={(e) => this.setState({addressInput: e.target.value})} type="text"
+          <input className={'edit-loc-input'} onChange={(e) => this.setState({addressInput: e.target.value})}
+                 type="text"
                  defaultValue={this.state.addressInput}/>
           {this.catCheckboxDisplayer()}
-          <input onChange={(e) => this.setState({latInput: e.target.value})} type="text"
+          <input className={'edit-loc-input'} onChange={(e) => this.setState({latInput: e.target.value})} type="text"
                  defaultValue={this.state.latInput}/>
-          <input onChange={(e) => this.setState({lonInput: e.target.value})} type="text"
+          <input className={'edit-loc-input'} onChange={(e) => this.setState({lonInput: e.target.value})} type="text"
                  defaultValue={this.state.lonInput}/>
           <div onClick={() => this.saveChangesClickHandler()} className={'btn save-loc-changes-btn'}>Save Canges</div>
         </div>
@@ -167,12 +170,12 @@ class Location extends React.Component {
     } else {
       return (
         <div>
-          <div>Name: {this.props.location.name}</div>
+          <div className={'location-name'}>Name: {this.props.location.name}</div>
           {this.categoryView()}
-          <div>Address:{this.props.location.address}</div>
-          <h3>Coordinates:</h3>
-          <div>{this.props.location.coordinates.lat}</div>
-          <div>{this.props.location.coordinates.lon}</div>
+          <div className={'location-address'}>Address:{this.props.location.address}</div>
+          <div className={'location-coordinates'}>Coordinates:</div>
+          <div className={'location-lat'}>Latitude:{this.props.location.coordinates.lat}</div>
+          <div className={'location-lon'}>Longitude: {this.props.location.coordinates.lon}</div>
         </div>
       )
     }
@@ -180,12 +183,10 @@ class Location extends React.Component {
 
   render() {
     return (
-      <li>
+      <li className={'location-li'}>
         {this.displayViewOrEdit()}
         {this.mapDisplayer()}
         {this.editBtnDisplayer()}
-
-
       </li>
     )
   }
@@ -199,18 +200,18 @@ function mapDispatchToProps(dispatch) {
       })
     },
     editLocation(id, selectedCategories, name, address, lat, lon) {
-    return dispatch({
-      type: 'EDIT_LOCATION',
-      id,
-      selectedCategories,
-      name,
-      address,
-      lat,
-      lon
-    })
-  }
+      return dispatch({
+        type: 'EDIT_LOCATION',
+        id,
+        selectedCategories,
+        name,
+        address,
+        lat,
+        lon
+      })
+    }
 
-}
+  }
 }
 
 function mapStateToProps(stateData) {

@@ -1,4 +1,9 @@
-.del-loc-btn {
+.del-loc-btn, .add-loc-btn {
   display: inline-block;
   width: 120px;
+}
+
+.locations-list {
+  width: 60%;
+  margin: 0 auto;
 }

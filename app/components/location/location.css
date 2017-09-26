@@ -1,8 +1,28 @@
-.hide-show-map-btn, .edit-loc-btn  {
-  display: inline-block;
-  width: 120px;
+
+
+.location-li {
+  border: 3px solid black;
+  border-radius: 5px;
+  margin: 10px;
 }
 
+.location-name, .location-cat, .location-address, .location-coordinates, .location-lon, .location-lat {
+  padding: 10px;
+}
 
+.hide-show-map-btn, .edit-loc-btn, .save-loc-changes-btn  {
+  display: inline-block;
+  width: 120px;
+  margin: 20px;
+}
 
+.edit-location-container, .add-location-container {
+  width: 60%;
+  margin: 0 auto;
+}
 
+.edit-loc-input, .add-loc-input {
+  display: block;
+  margin: 10px;
+  width: 200px;
+}
