@@ -1,4 +1,6 @@
 import uuid from 'uuid';
+import {defineState} from 'redux-localstore'
+
 
 const dummyCategories = [
   {
@@ -14,13 +16,15 @@ const dummyCategories = [
     name: 'Malls'
   }
 ];
+const initialState = defineState(dummyCategories)('catData');
 
-export default function categoriesReducer(catData = dummyCategories, action) {
+export default function categoriesReducer(catData = initialState, action) {
 
   if (action.type === 'DELETE_CATEGORY') {
 
 
     let newCatData = [...catData];
+    console.info(action.catArr);
     for (const catId of action.catArr) {
       newCatData = newCatData.filter((category) => catId !== category.id)
     }

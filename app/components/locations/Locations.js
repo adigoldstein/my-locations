@@ -28,7 +28,6 @@ class Locations extends React.Component {
   }
 
   deleteBtn() {
-    console.info(this.state.deleteSelectedLocs);
     if (this.state.deleteSelectedLocs.length > 0) {
       return <div onClick={() => this.deleteLocationsClickHandler()} className={'btn del-loc-btn'}>Delete</div>
     }

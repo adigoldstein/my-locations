@@ -1,4 +1,5 @@
 import uuid from 'uuid';
+import {defineState} from 'redux-localstore'
 
 const dummyLocations = [
   {
@@ -32,12 +33,11 @@ const dummyLocations = [
     cat: ['c3b7faeb-9103-4a0b-8fa1-4ec5c4f7401e']
   }
 ];
+const initialState = defineState(dummyLocations)('locData');
 
-export default function locationsReducer(locData = dummyLocations, action) {
+export default function locationsReducer(locData = initialState, action) {
 
   if (action.type === 'ADD_LOCATION') {
-console.info(action);
-    const newID = uuid();
     let newLocData = [...locData];
     newLocData.push({
       id: uuid(),
@@ -67,13 +67,16 @@ console.info(action);
   }
 
   if (action.type === 'DELETE_LOCATIONS') {
-    console.info(action.locArr);
     let newLocData = [...locData];
     for (const catId of action.locArr) {
       newLocData = newLocData.filter((location) => catId !== location.id)
     }
+    console.info(newLocData);
+
     return newLocData;
   }
+
+
   return locData
 }
 
