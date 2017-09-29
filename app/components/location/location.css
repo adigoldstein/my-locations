@@ -25,6 +25,10 @@
   margin: 0 auto;
 }
 
+.add-location-container {
+  width: 22%;
+}
+
 .edit-loc-input, .add-loc-input {
   display: block;
   margin: 10px;

@@ -1,3 +1,8 @@
+
+.sort-btns {
+  display: inline-block;
+  cursor: pointer;
+}
 .del-loc-btn, .add-loc-btn {
   display: inline-block;
   width: 120px;

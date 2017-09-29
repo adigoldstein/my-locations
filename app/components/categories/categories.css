@@ -46,6 +46,8 @@
 }
 .edit-form {
   display: flex;
+  width: 36%;
+  margin: 20px auto;
 }
 .edit-loc-input {
   display: inline-block;

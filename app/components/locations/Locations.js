@@ -188,9 +188,9 @@ class Locations extends React.Component {
     if (this.props.bar.isView) {
       return (
         <div className={'locations-container'}>
-          <div onClick={() => this.viewSortBySelector('modified')}>Sort my modified</div>
-          <div onClick={() => this.viewSortBySelector('alphabetic')}>Sort my Alphabetic</div>
-          <div onClick={() => this.viewSortBySelector('category')}>Sort my category</div>
+          <div className={'sort-btn'} onClick={() => this.viewSortBySelector('modified')}>Sort by modified</div>
+          <div className={'sort-btn'} onClick={() => this.viewSortBySelector('alphabetic')}>Sort by alphabetic</div>
+          <div className={'sort-btn'} onClick={() => this.viewSortBySelector('category')}>Sort by category</div>
           {this.sortByDisplay()}
 
         </div>
