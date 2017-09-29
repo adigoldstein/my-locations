@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 
 import Topbar from "../Topbar/Topbar";
 import Loaction from '../location/Location'
+import LocByCat from '../locByCat/LocByCat'
 import './locations.css'
 
 class Locations extends React.Component {
@@ -16,7 +17,10 @@ class Locations extends React.Component {
       latInput: '',
       lonInput: '',
       deleteSelectedLocs: [],
-      showError : false
+      showError: false,
+      isModified: true,
+      isAlphabetic: false,
+      isCategory: false
 
     }
   }
@@ -66,7 +70,7 @@ class Locations extends React.Component {
       newCategories.push(id);
       if (action === 'delete') {
         this.setState({deleteSelectedLocs: newCategories})
-      }  else {
+      } else {
         this.setState({selectedCategories: newCategories})
       }
     } else {
@@ -74,14 +78,14 @@ class Locations extends React.Component {
       let newCategories = arrToCheck.filter((catId) => catId !== id);
       if (action === 'delete') {
         this.setState({deleteSelectedLocs: newCategories});
-      }else {
+      } else {
         this.setState({selectedCategories: newCategories})
       }
     }
   }
 
   addLocationClickHandler() {
-    if (this.state.nameInput !== '' && this.state.addressInput !== '' && this.state.selectedCategories.length > 0 && this.state.lonInput !== '' && this.state.latInput !== '' ) {
+    if (this.state.nameInput !== '' && this.state.addressInput !== '' && this.state.selectedCategories.length > 0 && this.state.lonInput !== '' && this.state.latInput !== '') {
       this.props.addLocation(this.state.nameInput, this.state.addressInput, this.state.selectedCategories, this.state.latInput, this.state.lonInput);
       this.setState({
         selectedCategories: [],
@@ -92,7 +96,7 @@ class Locations extends React.Component {
         lonInput: ''
       });
       this.props.initBar()
-    } else  {
+    } else {
       this.setState({showError: true})
     }
 
@@ -129,24 +133,82 @@ class Locations extends React.Component {
     )
   }
 
-  createView() {
-    if (this.props.bar.isView || this.props.bar.isEdit) {
-      return (
+  viewSortBySelector(selector) {
+    switch (selector){
+      case 'modified' :
+        this.setState({ isModified: true,
+          isAlphabetic: false,
+          isCategory: false});
+        break;
+
+      case 'alphabetic' :
+        this.setState({ isModified: false,
+          isAlphabetic: true,
+          isCategory: false});
+        break;
+
+      case 'category' :
+        this.setState({ isModified: false,
+          isAlphabetic: false,
+          isCategory: true});
+        break;
+    }
+
+  }
+
+  sortByDisplay() {
+    if (this.state.isModified) {
+      return(
         <ul className={'locations-list'}>
           {this.props.loc.map((location) => <Loaction key={location.id}
                                                       location={location}/>)}
         </ul>
       )
+    } else if (this.state.isAlphabetic) {
+      const alphabeticOrdered = this.props.loc.sort(function (a, b) {
+        if(a.name.toLocaleLowerCase() < b.name.toLocaleLowerCase()) return -1;
+        if(a.name.toLocaleLowerCase() > b.name.toLocaleLowerCase()) return 1;
+        return 0;
+      } );
+      return(
+        <ul className={'locations-list'}>
+          {alphabeticOrdered.map((location) => <Loaction key={location.id}
+                                                      location={location}/>)}
+        </ul>
+      )
+    } else {
+      // Sort by categories
+      return this.props.cat.map((category)=> <LocByCat key={category.id}
+                                                       category={category}
+      />)
+    }
+  }
+
+  createView() {
+    if (this.props.bar.isView) {
+      return (
+        <div className={'locations-container'}>
+          <div onClick={() => this.viewSortBySelector('modified')}>Sort my modified</div>
+          <div onClick={() => this.viewSortBySelector('alphabetic')}>Sort my Alphabetic</div>
+          <div onClick={() => this.viewSortBySelector('category')}>Sort my category</div>
+          {this.sortByDisplay()}
+
+        </div>
+      )
+    } else if (this.props.bar.isEdit) {
+      return  <ul className={'locations-list'}>
+        {this.props.loc.map((location) => <Loaction key={location.id}
+                                                    location={location}/>)}
+      </ul>
     } else if (this.props.bar.isAdd) {
       return this.addLocationView()
     } else if (this.props.bar.isDelete) {
-      {
-        return this.deleteDisplayer()
-      }
+      return this.deleteDisplayer()
     }
   }
 
   componentDidMount() {
+
     this.props.initBar();
   }
 

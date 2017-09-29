@@ -44,6 +44,18 @@
   position: absolute;
   right: 0;
 }
+.edit-form {
+  display: flex;
+}
+.edit-loc-input {
+  display: inline-block;
+  margin-left: 0;
+  width: 600px;
+}
+
+.edit-save-changes {
+  width: 90px;
+}
 
 .checkbox-list  {
   display: flex;

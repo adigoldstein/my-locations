@@ -96,6 +96,7 @@ class Categories extends React.Component {
             return <li className={'view-item'} key={category.id}>
               <div className={'category-name'}>{category.name}</div>
               {this.createEditBtn(category.id)}
+
             </li>
           })}
         </ul>
@@ -119,10 +120,10 @@ class Categories extends React.Component {
   createEditForm() {
     if (this.state.editDisplay) {
       return (
-        <div>
-          <input type="text" onChange={(e) => this.setState({editInput: e.target.value})}
+        <div className={'edit-form'}>
+          <input className={'edit-loc-input'} type="text" onChange={(e) => this.setState({editInput: e.target.value})}
                  defaultValue={this.state.editValue.name}/>
-          <div onClick={() => this.editSaveChanges()}>save changes</div>
+          <div className={'edit-save-changes btn'} onClick={() => this.editSaveChanges()}>save changes</div>
         </div>
       )
     }

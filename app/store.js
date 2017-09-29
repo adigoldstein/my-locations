@@ -15,5 +15,5 @@ export const store = createStore(reducer);
 export default store;
 
 
-console.info('store');
+
 storeSynchronize(store);
