@@ -32,6 +32,7 @@ class Categories extends React.Component {
   }
 
   isCatChecked(id) {
+
     for (const selectedId of this.state.selectedCategories) {
       if (selectedId === id) {
         return true
@@ -41,11 +42,13 @@ class Categories extends React.Component {
   }
 
   createEditBtn(id) {
+
     return this.props.bar.isEdit ?
       <div id={id} className={'edit-btn btn'} onClick={(e) => this.editCategoryClickHandler(e)}>Edit</div> : null;
   }
 
   editCategoryClickHandler(e) {
+
     const idToEdit = e.target.getAttribute('id');
     const editVal = this.props.cat.find((catObj) => catObj.id.toString() === idToEdit);
     console.info(editVal);
@@ -53,6 +56,7 @@ class Categories extends React.Component {
   }
 
   addCategoryClickHandler() {
+
     if (this.state.addInput !== '') {
       this.props.addCategory(this.state.addInput);
       this.props.initBar();
@@ -63,12 +67,14 @@ class Categories extends React.Component {
   }
 
   addCategoryErrorMsg() {
+
     if (this.state.showError) {
       return <div className={'cat-error-msg'}>Please fill the location name</div>
     }
   }
 
   createCategoryView() {
+
     if (this.props.bar.isDelete) {
       return (
         this.props.cat.map((category) => {
@@ -105,6 +111,7 @@ class Categories extends React.Component {
   }
 
   createButton() {
+
     if (this.props.bar.isDelete && this.state.selectedCategories.length > 0) {
       return (
         <div className={'delete-btn btn'} onClick={() => this.deleteCategories()}>Delete</div>
@@ -113,11 +120,13 @@ class Categories extends React.Component {
   }
 
   editSaveChanges() {
+
     this.props.editCategory(this.state.editValue.id, this.state.editInput);
     this.setState({editDisplay: false, editInput: ''})
   }
 
   createEditForm() {
+
     if (this.state.editDisplay) {
       return (
         <div className={'edit-form'}>
@@ -130,7 +139,7 @@ class Categories extends React.Component {
   }
 
   deleteCategories() {
-    console.info('delete');
+
     this.props.deleteCat(this.state.selectedCategories);
     this.setState({selectedCategories: []});
   }
@@ -141,10 +150,10 @@ class Categories extends React.Component {
   }
 
   render() {
+
     return (
       <div>
         <Topbar title={'Categories'}/>
-
         {this.createEditForm()}
         {this.createCategoryView()}
         {this.createButton()}

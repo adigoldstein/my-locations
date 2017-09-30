@@ -18,20 +18,21 @@ class Locations extends React.Component {
       lonInput: '',
       deleteSelectedLocs: [],
       showError: false,
-      isModified: true,
-      isAlphabetic: false,
+      isAlphabetic: true,
       isCategory: false
 
     }
   }
 
   deleteLocationsClickHandler() {
+
     this.props.deleteLocations(this.state.deleteSelectedLocs);
     this.setState({deleteSelectedLocs: []}, this.props.initBar);
 
   }
 
   deleteBtn() {
+
     if (this.state.deleteSelectedLocs.length > 0) {
       return <div onClick={() => this.deleteLocationsClickHandler()} className={'btn del-loc-btn'}>Delete</div>
     }
@@ -54,6 +55,7 @@ class Locations extends React.Component {
   }
 
   isCatChecked(id, arrToCheck) {
+
     for (const selectedId of arrToCheck) {
       if (selectedId === id) {
         return true
@@ -85,6 +87,7 @@ class Locations extends React.Component {
   }
 
   addLocationClickHandler() {
+
     if (this.state.nameInput !== '' && this.state.addressInput !== '' && this.state.selectedCategories.length > 0 && this.state.lonInput !== '' && this.state.latInput !== '') {
       this.props.addLocation(this.state.nameInput, this.state.addressInput, this.state.selectedCategories, this.state.latInput, this.state.lonInput);
       this.setState({
@@ -103,12 +106,14 @@ class Locations extends React.Component {
   }
 
   showError() {
+
     if (this.state.showError) {
       return <div className={'location-error'}>*Please fill all fields (and select minimum one category)</div>
     }
   }
 
   addLocationView() {
+
     return (
       <div className={'add-location-container'}>
         <input className={'add-loc-input'} onChange={(e) => this.setState({nameInput: e.target.value})} type="text"
@@ -134,69 +139,67 @@ class Locations extends React.Component {
   }
 
   viewSortBySelector(selector) {
-    switch (selector){
-      case 'modified' :
-        this.setState({ isModified: true,
-          isAlphabetic: false,
-          isCategory: false});
-        break;
+
+    switch (selector) {
 
       case 'alphabetic' :
-        this.setState({ isModified: false,
+        this.setState({
           isAlphabetic: true,
-          isCategory: false});
+          isCategory: false
+        });
         break;
 
       case 'category' :
-        this.setState({ isModified: false,
+        this.setState({
           isAlphabetic: false,
-          isCategory: true});
+          isCategory: true
+        });
         break;
     }
 
   }
 
   sortByDisplay() {
-    if (this.state.isModified) {
-      return(
-        <ul className={'locations-list'}>
-          {this.props.loc.map((location) => <Loaction key={location.id}
-                                                      location={location}/>)}
-        </ul>
-      )
-    } else if (this.state.isAlphabetic) {
+
+    if (this.state.isAlphabetic) {
       const alphabeticOrdered = this.props.loc.sort(function (a, b) {
-        if(a.name.toLocaleLowerCase() < b.name.toLocaleLowerCase()) return -1;
-        if(a.name.toLocaleLowerCase() > b.name.toLocaleLowerCase()) return 1;
+        if (a.name.toLocaleLowerCase() < b.name.toLocaleLowerCase()) {
+          return -1;
+        }
+        if (a.name.toLocaleLowerCase() > b.name.toLocaleLowerCase()) {
+          return 1;
+        }
         return 0;
-      } );
-      return(
+      });
+      return (
         <ul className={'locations-list'}>
           {alphabeticOrdered.map((location) => <Loaction key={location.id}
-                                                      location={location}/>)}
+                                                         location={location}/>)}
         </ul>
       )
     } else {
       // Sort by categories
-      return this.props.cat.map((category)=> <LocByCat key={category.id}
-                                                       category={category}
+      return this.props.cat.map((category) => <LocByCat key={category.id}
+                                                        category={category}
       />)
     }
   }
 
   createView() {
+
     if (this.props.bar.isView) {
       return (
         <div className={'locations-container'}>
-          <div className={'sort-btn'} onClick={() => this.viewSortBySelector('modified')}>Sort by modified</div>
-          <div className={'sort-btn'} onClick={() => this.viewSortBySelector('alphabetic')}>Sort by alphabetic</div>
-          <div className={'sort-btn'} onClick={() => this.viewSortBySelector('category')}>Sort by category</div>
+          <div className={'sort-btns-container'}>
+            <div className={'sort-btn'} onClick={() => this.viewSortBySelector('alphabetic')}>Sort by alphabetic</div>
+            <div className={'sort-btn'} onClick={() => this.viewSortBySelector('category')}>Sort by category</div>
+          </div>
           {this.sortByDisplay()}
 
         </div>
       )
     } else if (this.props.bar.isEdit) {
-      return  <ul className={'locations-list'}>
+      return <ul className={'locations-list'}>
         {this.props.loc.map((location) => <Loaction key={location.id}
                                                     location={location}/>)}
       </ul>
@@ -213,6 +216,7 @@ class Locations extends React.Component {
   }
 
   render() {
+
     return (
       <div>
         <Topbar title={'Locations'}/>

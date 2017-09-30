@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 import Loaction from '../location/Location';
+import './locByCat.css'
 
 class LocByCat extends React.Component {
   constructor() {
@@ -27,24 +28,36 @@ class LocByCat extends React.Component {
   }
 
   showHideLocationUl() {
+
     if (this.state.isVisible) {
       return (
+        <div>
+          {this.noLocsInCatMsg()}
         <ul className={'locations-list'}>
           {this.state.filteredByCat.map((location) => <Loaction key={location.id}
                                                                 location={location}/>)}
         </ul>
+        </div>
       )
     }
   }
 
+  noLocsInCatMsg() {
+
+    return this.state.filteredByCat.length === 0 ? <div className={'no-loc-to-show'}>No locations in this category yet...</div> : null;
+  }
+
   componentDidMount() {
+
     this.filterLocations()
   }
 
   render() {
+
     return (
       <div className={'sort-by-cat-container'}>
-        <h2 onClick={()=> this.setState({isVisible: !this.state.isVisible})}>{this.props.category.name}</h2>
+        <h2 className={'cat-header'} onClick={()=> this.setState({isVisible: !this.state.isVisible})}>{this.props.category.name}<i className={"arrow down"}></i></h2>
+
         {this.showHideLocationUl()}
       </div>
     )
@@ -57,32 +70,13 @@ function mapDispatchToProps(dispatch) {
       return dispatch({
         type: 'INIT_BAR',
       })
-    },
-    addLocation(name, address, catArr, lat, lon) {
-      return dispatch({
-        type: 'ADD_LOCATION',
-        name,
-        address,
-        catArr,
-        lat,
-        lon
-      })
-    },
-    deleteLocations(locArr) {
-      return dispatch({
-        type: 'DELETE_LOCATIONS',
-        locArr
-      })
     }
-
   }
 }
 
 function mapStateToProps(stateData) {
   return {
-    cat: stateData.catData,
     loc: stateData.locData
-    // bar: stateData.bar
   }
 }
 

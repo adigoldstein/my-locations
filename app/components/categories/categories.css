@@ -1,6 +1,6 @@
 .view-item {
   padding: 10px;
-  font-size:20px;
+  font-size: 20px;
   position: relative;
 }
 
@@ -8,7 +8,6 @@
   padding-top: 30px;
   display: flex;
   justify-content: center;
-
 }
 
 .add-container {
@@ -19,11 +18,11 @@
   margin-right: 10px;
   width: 200px;
   margin-top: 8px;
-
 }
+
 .cat-error-msg {
   position: absolute;
-  top: 35px ;
+  top: 35px;
   color: red;
 }
 
@@ -39,16 +38,19 @@
   display: inline-block;
   padding-right: 10px;
 }
+
 .edit-btn {
   display: inline-block;
   position: absolute;
   right: 0;
 }
+
 .edit-form {
   display: flex;
   width: 36%;
   margin: 20px auto;
 }
+
 .edit-loc-input {
   display: inline-block;
   margin-left: 0;
@@ -59,10 +61,11 @@
   width: 90px;
 }
 
-.checkbox-list  {
+.checkbox-list {
   display: flex;
   padding: 10px;
-  font-size:20px;
+  font-size: 20px;
+  margin-left: 25%;
 }
 
 .checkbox-list input {

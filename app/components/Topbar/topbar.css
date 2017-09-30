@@ -8,7 +8,6 @@
 .bar-title {
   display: flex;
   align-items: center;
-  /*padding-left: 5%;*/
   padding: 20px 0 20px 5%;
 }
 
@@ -18,7 +17,7 @@
 }
 
 .action-list li {
-  padding: 25px ;
+  padding: 25px;
   cursor: pointer;
   color: white;
 }

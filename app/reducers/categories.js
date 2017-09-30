@@ -22,9 +22,7 @@ export default function categoriesReducer(catData = initialState, action) {
 
   if (action.type === 'DELETE_CATEGORY') {
 
-
     let newCatData = [...catData];
-    console.info(action.catArr);
     for (const catId of action.catArr) {
       newCatData = newCatData.filter((category) => catId !== category.id)
     }
@@ -43,8 +41,7 @@ export default function categoriesReducer(catData = initialState, action) {
 
   if (action.type === 'ADD_CATEGORY') {
     let newCatData = [...catData];
-    const id = uuid();
-    newCatData.push({id: id, name: action.newName});
+    newCatData.push({id: uuid(), name: action.newName});
     return newCatData
   }
 

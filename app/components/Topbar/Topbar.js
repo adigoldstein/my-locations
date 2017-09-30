@@ -10,28 +10,33 @@ class Topbar extends React.Component {
   }
 
   isActive(actionIsActive) {
+
     return actionIsActive ? 'bar-active' : null
   }
 
   changeActiveView() {
+
     if (!this.props.isView) {
       this.props.activateView()
     }
   }
 
   changeActiveAdd() {
+
     if (!this.props.isAdd) {
       this.props.activateAdd();
     }
   }
 
   changeActiveEdit() {
+
     if (!this.props.isEdit) {
       this.props.activateEdit();
     }
   }
 
   changeActiveDelete() {
+
     if (!this.props.isDelete) {
       this.props.activateDelete();
     }

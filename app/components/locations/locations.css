@@ -1,8 +1,26 @@
-
-.sort-btns {
-  display: inline-block;
-  cursor: pointer;
+.sort-btns-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px
 }
+
+.sort-btn {
+  cursor: pointer;
+  border: 1px solid black;
+  padding: 10px;
+}
+
+.sort-btn:first-child {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-right: none;
+}
+
+.sort-btn:last-child {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
 .del-loc-btn, .add-loc-btn {
   display: inline-block;
   width: 120px;
@@ -19,7 +37,8 @@
 }
 
 .cat-list {
-  padding-right: 5px;
+  padding-left: 10px;
+  display: block;
 }
 
 

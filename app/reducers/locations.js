@@ -71,8 +71,6 @@ export default function locationsReducer(locData = initialState, action) {
     for (const catId of action.locArr) {
       newLocData = newLocData.filter((location) => catId !== location.id)
     }
-    console.info(newLocData);
-
     return newLocData;
   }
 

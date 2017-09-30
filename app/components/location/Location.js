@@ -13,6 +13,8 @@ import "./location.css"
 class Location extends React.Component {
   constructor() {
     super();
+
+
     this.state = {
       isMap: false,
       viewEditFields: false,
@@ -26,21 +28,20 @@ class Location extends React.Component {
   }
 
   editLocClickHandler(e) {
+
     const editObj = this.props.loc.find((item) => e.target.id === item.id);
-    console.info(editObj);
+
     this.setState({
       selectedCategories: editObj.cat,
       nameInput: editObj.name,
       addressInput: editObj.address,
-      // catInput: editObj,
       latInput: editObj.coordinates.lat,
       lonInput: editObj.coordinates.lon
     }, this.setState({viewEditFields: true}))
-
-
   }
 
   editBtnDisplayer() {
+
     if (this.props.bar.isEdit && !this.state.viewEditFields) {
       return <div onClick={(e) => this.editLocClickHandler(e)} id={this.props.location.id}
                   className={'btn edit-loc-btn'}>Edit</div>
@@ -48,6 +49,7 @@ class Location extends React.Component {
   }
 
   mapDisplayer() {
+
     // map const data
     const MapWithAMarker = compose(
       withScriptjs,
@@ -62,6 +64,7 @@ class Location extends React.Component {
         />
       </GoogleMap>
     );
+
     if (this.state.isMap) {
       return (
         <div>
@@ -84,7 +87,9 @@ class Location extends React.Component {
   }
 
   categoryView() {
+
     let catName = '';
+
     this.props.location.cat.map((categoty) => {
       for (const catId of this.props.cat) {
         if (catId.id === categoty) {
@@ -93,16 +98,19 @@ class Location extends React.Component {
       }
     });
     const retStr = catName.slice(0, -2);
+
     return <div className={'location-cat'}>Category : {retStr}</div>
   }
 
   saveChangesClickHandler() {
+
     this.props.editLocation(this.props.location.id,
       this.state.selectedCategories,
       this.state.nameInput,
       this.state.addressInput,
       this.state.latInput,
       this.state.lonInput);
+
     this.setState({
       isMap: false,
       viewEditFields: false,
@@ -130,6 +138,7 @@ class Location extends React.Component {
   }
 
   isCatChecked(catId) {
+
     for (const cat of this.state.selectedCategories) {
       if (cat === catId) {
         return true
@@ -139,8 +148,8 @@ class Location extends React.Component {
   }
 
   catCheckboxDisplayer() {
-    return this.props.cat.map((catItem) => {
 
+    return this.props.cat.map((catItem) => {
       return (
         <div key={catItem.id}>
           <label><input onChange={(e) => this.checkUncheckCategory(e.target.checked, catItem.id)}
@@ -151,6 +160,7 @@ class Location extends React.Component {
   }
 
   displayViewOrEdit() {
+
     if (this.state.viewEditFields) {
       return (
         <div className={'edit-location-container'}>
@@ -182,6 +192,7 @@ class Location extends React.Component {
   }
 
   render() {
+
     return (
       <li className={'location-li'}>
         {this.displayViewOrEdit()}
