@@ -1,5 +1,7 @@
 # Adi Goldstein's MyLocations
 
+If you wish to run this project locally please run `npm install` and then `npm start`. 
+Open locahost:8080 in your browser and you're ready to go
 ### Some notes about it:
 
 1. All app data uses unique ID with uuid library.
